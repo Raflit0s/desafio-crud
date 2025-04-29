@@ -2,6 +2,12 @@ package com.devsuperior.desafioCrud.dto;
 
 import java.time.LocalDate;
 
+import com.devsuperior.desafioCrud.entities.Client;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 public class ClientDTO {
 	private Long id;
 	private String name;
@@ -9,18 +15,13 @@ public class ClientDTO {
 	private Double income;
 	private LocalDate birthDate;
 	private Integer children;
-	
-	public ClientDTO() {
-	}
-	
-	public ClientDTO(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.cpf = cpf;
-		this.income = income;
-		this.birthDate = birthDate;
-		this.children = children;
+
+	public ClientDTO(Client client) {
+		name = client.getName();
+		cpf = client.getCpf();
+		income = client.getIncome();
+		birthDate = client.getBirthDate();
+		children = client.getChildren();
 	}
 
 	public Long getId() {
@@ -70,4 +71,6 @@ public class ClientDTO {
 	public void setChildren(Integer children) {
 		this.children = children;
 	}
+	
+	
 }
