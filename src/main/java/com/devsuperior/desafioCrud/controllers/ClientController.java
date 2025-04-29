@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devsuperior.desafioCrud.dto.ClientDTO;
@@ -28,6 +30,12 @@ public class ClientController {
 	@GetMapping
 	ResponseEntity<Page<ClientDTO>> findAll(Pageable page) {
 		Page<ClientDTO> client = service.findAll(page);
+		return ResponseEntity.ok(client);
+	}
+	
+	@PutMapping(value = "/{id}")
+	ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO dto) {
+		ClientDTO client = service.update(id, dto);
 		return ResponseEntity.ok(client);
 	}
 }
