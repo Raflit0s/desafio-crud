@@ -43,6 +43,13 @@ public class ClientService {
 		}
 	}
 	
+	public ClientDTO insert(ClientDTO client) {
+		Client entity = new Client();
+		dtoToEntity(client, entity);
+		entity = repository.save(entity);
+		return new ClientDTO(entity);
+	}
+	
 	@Transactional
 	public void delete(Long id) {
 		if(!repository.existsById(id)) {
@@ -51,11 +58,11 @@ public class ClientService {
 		repository.deleteById(id);
 	}
 	
-	public void dtoToEntity(ClientDTO client, Client dto) {
-		dto.setBirthDate(client.getBirthDate());
-		dto.setChildren(client.getChildren());
-		dto.setCpf(client.getCpf());
-		dto.setIncome(client.getIncome());
-		dto.setName(client.getName());
+	public void dtoToEntity(ClientDTO dto, Client entity) {
+		entity.setBirthDate(dto.getBirthDate());
+		entity.setChildren(dto.getChildren());
+		entity.setCpf(dto.getCpf());
+		entity.setIncome(dto.getIncome());
+		entity.setName(dto.getName());
 	}
 }
