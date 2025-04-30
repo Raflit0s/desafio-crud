@@ -1,7 +1,5 @@
 package com.devsuperior.desafioCrud.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +10,8 @@ import com.devsuperior.desafioCrud.dto.ClientDTO;
 import com.devsuperior.desafioCrud.entities.Client;
 import com.devsuperior.desafioCrud.repositories.ClientRepository;
 import com.devsuperior.desafioCrud.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClientService {
@@ -33,10 +33,14 @@ public class ClientService {
 	
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO client) {
+		try{
 		Client entity = repository.getReferenceById(id);
 		dtoToEntity(client, entity);
 		entity = repository.save(entity);
 		return new ClientDTO(entity);
+		} catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		}
 	}
 	
 	@Transactional
